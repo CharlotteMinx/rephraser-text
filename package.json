@@ -1,0 +1,58 @@
+{
+  "name": "text-rephraser",
+  "version": "1.0.0",
+  "main": "public/electron.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"webpack serve --mode development\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
+    "build": "webpack --mode production",
+    "package": "electron-builder build --win --publish never",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Charlotte Minx",
+  "license": "ISC",
+  "description": "Text rephraser using AI",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@google/generative-ai": "^0.24.0",
+    "@mui/icons-material": "^7.0.1",
+    "@mui/material": "^7.0.1",
+    "clipboard-copy": "^4.0.1",
+    "electron": "^35.1.2",
+    "electron-store": "^10.0.1",
+    "node-notifier": "^10.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-react": "^7.26.3",
+    "babel-loader": "^10.0.0",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "css-loader": "^7.1.2",
+    "electron-builder": "^26.0.12",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1"
+  },
+  "build": {
+    "appId": "com.textrephraser.app",
+    "productName": "Text Rephraser",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "dist/**/*",
+      "public/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.text-input {
+  min-height: 200px;
+  width: 100%;
+  resize: vertical;
+}
+
+.settings-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.style-button {
+  margin: 8px;
+  min-width: 120px;
+}
+
+.settings-drawer {
+  width: 300px;
+  padding: 16px;
+}
+
+.settings-field {
+  margin: 16px 0;
+}
