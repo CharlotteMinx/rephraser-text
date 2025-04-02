@@ -1,4 +1,4 @@
-# Text Rephraser
+# Text Rephraser - Gemini 2.0 flash wrapper
 
 A desktop application for rephrasing text using the Gemini AI API. This application allows users to input text, select a rephrasing style, and get AI-generated rephrased text that's automatically copied to the clipboard.
 
@@ -117,3 +117,6 @@ The packaged applications will be available in the `release-builds` directory.
 ## License
 
 ISC
+
+## Additional comments
+- vibe coded this in an hour

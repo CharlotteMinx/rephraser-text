@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, Notification } = require('electron');
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
@@ -65,6 +65,7 @@ function createWindow() {
     minWidth: 600,
     minHeight: 500,
     backgroundColor: '#121212', // Dark background color
+    icon: path.join(__dirname, 'icon.png'),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -168,21 +169,36 @@ ipcMain.handle('save-settings', async (event, settings) => {
 });
 
 ipcMain.handle('show-notification', async (event, message) => {
-  const notificationOptions = {
-    title: 'Text Rephraser',
-    message: message,
-    sound: true
-  };
-  
-  // Only add icon if it exists
-  const iconPath = path.join(__dirname, 'icon.png');
-  if (fs.existsSync(iconPath)) {
-    notificationOptions.icon = iconPath;
+  try {
+    // Try both methods for notifications
+    
+    // 1. Use node-notifier
+    const iconPath = path.join(__dirname, 'icon.png');
+    notifier.notify({
+      title: 'Text Rephraser',
+      message: message,
+      icon: iconPath,
+      sound: true
+    });
+    
+    // 2. Use browser notification as a fallback
+    if (mainWindow && mainWindow.webContents) {
+      const jsCode = `
+        new Notification('Text Rephraser', {
+          body: ${JSON.stringify(message)},
+          icon: 'icon.png'
+        });
+      `;
+      mainWindow.webContents.executeJavaScript(jsCode).catch(err => {
+        console.error('Failed to show browser notification:', err);
+      });
+    }
+    
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to show notification:', error);
+    return { success: false, error: error.message };
   }
-  
-  notifier.notify(notificationOptions);
-  
-  return { success: true };
 });
 
 ipcMain.handle('open-external-link', async (event, url) => {
