@@ -74,6 +74,28 @@ function Settings({ open, onClose, settings, onSave, onOpen }) {
             />
             <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
               Your API key is stored locally and never shared.
+              <Box component="span" sx={{ display: 'block', mt: 1 }}>
+                Get your API key from{' '}
+                <Box 
+                  component="a" 
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (window.electron && window.electron.openExternalLink) {
+                      window.electron.openExternalLink('https://makersuite.google.com/app/apikey');
+                    } else {
+                      window.open('https://makersuite.google.com/app/apikey', '_blank');
+                    }
+                  }}
+                  sx={{ 
+                    color: 'primary.main',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Google AI Studio
+                </Box>
+              </Box>
             </Typography>
           </Box>
 

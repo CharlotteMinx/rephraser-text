@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -25,10 +26,19 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    fallback: {
+      "path": false,
+      "fs": false,
+      "crypto": false
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    // Add global object for browser environment
+    new webpack.ProvidePlugin({
+      global: require.resolve('./src/global.js'),
     }),
   ],
   devServer: {

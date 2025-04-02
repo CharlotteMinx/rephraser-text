@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld(
     getSettings: () => ipcRenderer.invoke('get-settings'),
     saveSettings: (settings) => ipcRenderer.invoke('save-settings', settings),
     showNotification: (message) => ipcRenderer.invoke('show-notification', message),
-    copyToClipboard: (text) => ipcRenderer.invoke('copy-to-clipboard', text)
+    copyToClipboard: (text) => ipcRenderer.invoke('copy-to-clipboard', text),
+    openExternalLink: (url) => ipcRenderer.invoke('open-external-link', url)
   }
 );

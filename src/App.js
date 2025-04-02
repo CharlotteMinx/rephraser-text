@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Paper } from '@mui/material';
+import { Container, Typography, Paper, CircularProgress, Box } from '@mui/material';
 import TextInput from './components/TextInput.js';
 import RephrasingButtons from './components/RephrasingButtons.js';
 import Settings from './components/Settings.js';
@@ -101,10 +101,19 @@ function App() {
           disabled={isProcessing} 
         />
         
-        <RephrasingButtons 
-          onRephrase={handleRephrase} 
-          disabled={isProcessing || !text.trim()} 
-        />
+        {isProcessing ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
+            <CircularProgress />
+            <Typography variant="body1" sx={{ ml: 2 }}>
+              Processing with AI (this may take a moment)...
+            </Typography>
+          </Box>
+        ) : (
+          <RephrasingButtons 
+            onRephrase={handleRephrase} 
+            disabled={isProcessing || !text.trim()} 
+          />
+        )}
         
         <Settings 
           open={settingsOpen} 

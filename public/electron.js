@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
@@ -183,4 +183,14 @@ ipcMain.handle('show-notification', async (event, message) => {
   notifier.notify(notificationOptions);
   
   return { success: true };
+});
+
+ipcMain.handle('open-external-link', async (event, url) => {
+  try {
+    await shell.openExternal(url);
+    return { success: true };
+  } catch (error) {
+    console.error('Failed to open external link:', error);
+    return { success: false, error: error.message };
+  }
 });
