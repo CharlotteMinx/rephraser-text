@@ -8,23 +8,52 @@ const getPromptForStyle = (style, text) => {
     2. Contain ONLY the rewritten text with no explanations, options, or additional commentary
     3. Preserve the key information and meaning of the original text
     4. Not include any introductory phrases like "Here's the rewritten text" or "Here you go"
+    5. Sound natural and human-like, as if written by a real person
   `;
   
   const prompts = {
     'developer': `${baseInstructions}
-      Use a developer-friendly tone with technical accuracy and clarity.
+      Rewrite this as if a software engineer wrote it. Your response should:
+      - Use precise technical terminology where appropriate
+      - Be concise and efficient in expression
+      - Include occasional programming analogies or references
+      - Have a logical structure with clear reasoning
+      - Maintain a slightly informal but professional tone
+      - Use technical jargon that would be familiar to developers
+      
       Original text: "${text}"`,
     
     'friendly': `${baseInstructions}
-      Use a friendly, warm, and approachable tone.
+      Rewrite this in a genuinely warm and friendly tone. Your response should:
+      - Use conversational language with a personal touch
+      - Include encouraging and supportive phrases
+      - Sound like someone speaking to a good friend
+      - Use warm, inviting language that builds connection
+      - Include occasional personal touches or questions
+      - Have a positive, uplifting quality
+      
       Original text: "${text}"`,
     
     'business': `${baseInstructions}
-      Use a professional business tone suitable for corporate communications.
+      Rewrite this for a professional workplace context. Your response should:
+      - Use appropriate business terminology and phrasing
+      - Maintain a professional but not overly formal tone
+      - Be clear, concise, and action-oriented
+      - Include workplace-appropriate language
+      - Sound like an email or message from a competent colleague
+      - Be structured in a way that respects the reader's time
+      
       Original text: "${text}"`,
     
     'gen-z': `${baseInstructions}
-      Use Gen-Z language, slang, and style.
+      Rewrite this using authentic Gen-Z language and style. Your response should:
+      - Include current slang and expressions used by Gen-Z (born 1997-2012)
+      - Use emojis naturally throughout the text 😎✨
+      - Include abbreviated expressions and internet shorthand
+      - Have a casual, conversational flow
+      - Reference current trends or meme formats when appropriate
+      - Sound like a text message or social media post from a Gen-Z person
+      
       Original text: "${text}"`
   };
   

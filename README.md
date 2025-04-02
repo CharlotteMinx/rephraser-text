@@ -57,15 +57,41 @@ A desktop application for rephrasing text using the Gemini AI API. This applicat
 
 ## Development
 
-- Run in development mode:
+- Run in development mode (with DevTools and logging):
   ```
   npm run dev
   ```
 
-- Package the application for distribution:
+- Run in production mode:
+  ```
+  npm start
+  ```
+
+- Build the application:
+  ```
+  npm run build
+  ```
+
+## Packaging
+
+The application can be packaged for distribution on different platforms:
+
+- Package for Windows:
   ```
   npm run package
   ```
+
+- Package for macOS:
+  ```
+  npm run package-mac
+  ```
+
+- Package for Linux:
+  ```
+  npm run package-linux
+  ```
+
+The packaged applications will be available in the `release-builds` directory.
 
 ## Usage
 

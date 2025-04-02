@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "public/electron.js",
   "scripts": {
-    "start": "electron .",
-    "dev": "concurrently \"webpack serve --mode development\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
+    "start": "cross-env NODE_ENV=production electron .",
+    "dev": "cross-env NODE_ENV=development concurrently \"webpack serve --mode development\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
     "build": "webpack --mode production",
-    "package": "electron-builder build --win --publish never",
+    "package": "npm run build && electron-builder build --win --publish never",
+    "package-mac": "npm run build && electron-builder build --mac --publish never",
+    "package-linux": "npm run build && electron-builder build --linux --publish never",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -45,14 +47,29 @@
     "appId": "com.textrephraser.app",
     "productName": "Text Rephraser",
     "directories": {
-      "output": "dist"
+      "output": "release-builds"
     },
     "files": [
       "dist/**/*",
-      "public/**/*"
+      "public/**/*",
+      "node_modules/**/*",
+      "package.json"
     ],
     "win": {
       "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Text Rephraser"
     }
   }
 }

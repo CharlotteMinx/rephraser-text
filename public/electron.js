@@ -5,8 +5,11 @@ const fs = require('fs');
 const notifier = require('node-notifier');
 require('dotenv').config();
 
-console.log('Starting Text Rephraser application...');
-console.log('__dirname:', __dirname);
+// Conditional logging based on environment
+if (process.env.NODE_ENV === 'development') {
+  console.log('Starting Text Rephraser application...');
+  console.log('__dirname:', __dirname);
+}
 
 // Simple settings store implementation
 class SettingsStore {
@@ -57,13 +60,23 @@ let mainWindow;
 function createWindow() {
   // Create the browser window
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 900,
+    height: 700,
+    minWidth: 600,
+    minHeight: 500,
+    backgroundColor: '#121212', // Dark background color
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    show: false, // Don't show until ready
+    title: 'Text Rephraser'
+  });
+  
+  // Show window when ready to avoid flickering
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
   });
 
   // Load the index.html of the app
@@ -72,26 +85,21 @@ function createWindow() {
     protocol: 'file:',
     slashes: true
   });
-  console.log('Loading URL:', startUrl);
-  
   mainWindow.loadURL(startUrl);
   
-  // Open DevTools to help with debugging
-  mainWindow.webContents.openDevTools();
-  
-  // Log when the window is ready to show
-  mainWindow.webContents.on('did-finish-load', () => {
-    console.log('Window loaded successfully');
-  });
-  
-  // Log any errors that occur during loading
-  mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
-    console.error('Failed to load window:', errorDescription);
-  });
-
-  // Open DevTools in development mode
+  // Open DevTools only in development mode
   if (process.env.NODE_ENV === 'development') {
     mainWindow.webContents.openDevTools();
+    
+    // Log when the window is ready to show
+    mainWindow.webContents.on('did-finish-load', () => {
+      console.log('Window loaded successfully');
+    });
+    
+    // Log any errors that occur during loading
+    mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+      console.error('Failed to load window:', errorDescription);
+    });
   }
 
   // Emitted when the window is closed
@@ -160,12 +168,19 @@ ipcMain.handle('save-settings', async (event, settings) => {
 });
 
 ipcMain.handle('show-notification', async (event, message) => {
-  notifier.notify({
+  const notificationOptions = {
     title: 'Text Rephraser',
     message: message,
-    icon: path.join(__dirname, 'icon.png'),
     sound: true
-  });
+  };
+  
+  // Only add icon if it exists
+  const iconPath = path.join(__dirname, 'icon.png');
+  if (fs.existsSync(iconPath)) {
+    notificationOptions.icon = iconPath;
+  }
+  
+  notifier.notify(notificationOptions);
   
   return { success: true };
 });
