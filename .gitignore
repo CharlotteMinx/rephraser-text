@@ -4,6 +4,7 @@
 # Production
 /dist
 /build
+/release-builds
 
 # Logs
 logs
